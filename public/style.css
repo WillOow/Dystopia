@@ -1,0 +1,485 @@
+html { height: 100%;
+font-family : base;
+}
+
+body {
+  height: 100%;
+  min-height: 100%;
+  margin-top: 0px;
+  background-color: lightslategray;
+  background-image: url("../images/bcg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  margin: 0px;
+  overflow: hidden;
+  top: 0px;
+  bottom: 0px;
+  width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-family: base;
+}
+
+h1 {
+  font-size: 50px;
+  text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+h5 {
+  font-size: 20px;
+}
+
+h6 {
+  font-size: 20px;
+  color: white;
+  text-shadow: black 0.1em 0.1em 0.2em;
+  margin: auto;
+}
+
+.boutonintro {
+  background-color: #802b00;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+  font-family: base;
+  margin: 4px 2px;
+  margin-top: 20%;
+  cursor: pointer;
+  animation-name: fadein;
+  animation-duration: 8s;
+  box-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.btn-primary {
+  font-family: base;
+
+  background-color: #d6d6d690;
+  color: #1b1b1b;
+  border: 2px solid #161616;
+  border-radius: 4px;
+  margin-bottom: -2px;
+  opacity: inherit;
+  z-index: -100;
+
+}
+
+
+#actions {
+  border: 3px solid #161616;
+  border-bottom: none;
+  height: 20px;
+  margin-bottom: -2px;
+
+}
+
+.btn {
+  background-color: #292929;
+  /* Green */
+  border: 2px solid #E8BF44;
+  color: #BBBBBB;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+}
+
+button:disabled {
+  background-color: #161616;
+}
+
+#sendButton {
+  border: none;
+
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  border-radius: 7px;
+}
+
+.btnDesactive {
+  background-color: grey;
+  pointer-events: none;
+  color: black;
+}
+
+.btnBleu {
+  background-color: blue;
+  color: blue;
+}
+
+.btnArgent {
+  background-color: silver;
+  color: silver;
+}
+
+.btnDore {
+  background-color: gold;
+  color: gold;
+}
+
+.btnVert {
+  background-color: green;
+  color: green;
+}
+
+.btnRouge {
+  background-color: red;
+  color: red;
+}
+
+.btnViolet {
+  background-color: purple;
+  color: purple;
+}
+
+.btnNoir {
+  background-color: black;
+  color: black;
+}
+
+.btnBlanc {
+  background-color: whitesmoke;
+  color: whitesmoke;
+}
+
+.btnBrun {
+  background-color: brown;
+  color: brown;
+}
+
+.icnBleu {
+  background-color: blue;
+  color: blue;
+}
+
+.icnArgent {
+  background-color: silver;
+  color: silver;
+}
+
+.icnDore {
+  background-color: gold;
+  color: gold;
+}
+
+.icnVert {
+  background-color: green;
+  color: green;
+}
+
+.icnRouge {
+  background-color: red;
+  color: red;
+}
+
+.icnViolet {
+  background-color: purple;
+  color: purple;
+}
+
+.icnNoir {
+  background-color: black;
+  color: black;
+}
+
+.icnBlanc {
+  background-color: whitesmoke;
+  color: whitesmoke;
+}
+
+.icnBrun {
+  background-color: brown;
+  color: brown;
+}
+
+#userFormArea {
+  display: none;
+}
+
+
+#username {
+  background-color: #BBBBBB;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  height: 40px;
+  width: 300px;
+  font-size: 20px;
+}
+
+#remplir {
+  animation-name: fadein;
+  animation-duration: 2s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+@font-face {
+  font-family: "base";
+  src: url(Omega\ Ruby.otf) format("truetype");
+}
+
+
+
+
+#lineImage {
+
+
+  margin-top: 300px;
+
+  text-align: center;
+
+
+}
+
+img.center {
+  display: block;
+  margin: 0 auto;
+}
+
+
+div.scrollmenu {
+  background-color: #252525;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: #BBBBBB;
+  font-size: 18px;
+  text-align: center;
+  padding: 24px 40px;
+  ;
+  text-decoration: none;
+  -webkit-transition-duration: 0.2s;
+  /* Safari */
+  transition-duration: 0.2;
+  border: 2px solid #292929;
+  border-radius: 4px;
+}
+
+div.scrollmenu a:hover {
+  background-color: #313131;
+  border: 2px solid #E8BF44;
+  border-radius: 4px;
+}
+
+#lobby {
+  display: none;
+  animation-name: fadein;
+  animation-duration: 2s;
+}
+
+#jeu {
+  display: none;
+}
+
+#users {
+  padding-inline-start: 0px;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+
+#top {
+  margin-top: -25px;
+  padding: 1%;
+  background-color: rgba(255, 153, 51, 0.25);
+  border-bottom: 3px solid black;
+  text-align: center;
+}
+
+#vie {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10%;
+}
+
+#Tour {
+  width: 15%;
+  font-family: base;
+  text-align: center;
+  color: white;
+  text-shadow: black 0.1em 0.1em 0.2em;
+  margin: auto;
+  background-color: rgba(255, 153, 51, 0.25);
+  margin-top: -3px;
+  border: 3px solid black;
+}
+
+#right {
+  float: right;
+  text-align: center;
+  margin-top: -24px;
+  padding-left: 10%;
+  padding-right: 10%;
+  background-color: rgba(255, 153, 51, 0.25);
+  border:3px solid black;
+  border-right: none;
+}
+
+
+#bottom1 {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 153, 51, 0.25);
+  border-top: 3px solid black;
+}
+
+#bottom {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  position: absolute;
+  bottom: 0;
+}
+
+.arme {
+  height: 30px;
+  width: 30px;
+  background-color: grey;
+}
+
+.armure {
+  height: 30px;
+  width: 30px;
+  background-color: grey;
+}
+
+.bottes {
+  height: 30px;
+  width: 30px;
+  background-color: grey;
+}
+
+
+
+
+.ActionsDiv {
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  background-color: rgba(48, 44, 41, 0.761);
+
+  padding: 3px;
+  padding-bottom: 5px;
+  margin-bottom: -44px;
+  opacity: -1;
+  content: inherit;
+}
+
+.ActionsDiv.anim {
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  opacity: 1;
+
+  z-index: -100;
+  margin-bottom: 0px !important;
+}
+
+.AttaquerDiv {
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s; /*ABC*/
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  background-color: rgba(48, 44, 41, 0.761);
+
+  padding: 3px;
+  padding-bottom: 5px;
+  margin-bottom: -65px;
+  opacity: -1;
+  content: inherit;
+}
+
+.AttaquerDiv.anim {
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;/*ABC*/
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  opacity: 1;
+
+  z-index: -100;
+  margin-bottom: 0px !important;
+}
+
+.contenuVie { /*ABC*/
+  width:30px;
+  height:14px;
+  background-color:green; 
+  border:3px solid green; 
+  border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.chrono {
+  position : absolute;
+  top:0;
+  font-family: base;
+  font-size: 20px;
+  color: white;
+  text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+
+.des {
+  text-align: center;
+  display : none;
+  animation-name: fadein;
+  animation-duration: 2s;
+}
+#isTour {
+  margin:8%;
+  margin-top:10%;
+  font-size:20px;
+  font-family: base;
+  text-shadow: black 0.1em 0.1em 0.2em;
+  color:white;
+} 

@@ -1,0 +1,45 @@
+	<DOCTYPE html>
+	<html>
+	<head></head>
+	<meta charset="UTF-8">
+
+	
+	<body>
+	<h1>Générateur de loot</h1> 
+	<p id="menu"></p>
+	<p id="status"></p>
+	
+	<img src='face1.png' id='de'/>
+	<script>
+function lancerDes(n) {
+	x=document.getElementById('de'); 
+
+	if(n!=18){	
+		var de1=Math.floor(Math.random()*44)+1   	
+		document.getElementById('menu').innerHTML = de1;
+		setTimeout(function(){lancerDes(n+1)}, 200);
+		x.setAttribute("src","face"+de1+".png");
+		}
+	else{
+		document.getElementById('status').innerHTML='';
+		resultat = document.getElementById('menu').innerHTML;
+		x.setAttribute("src","face"+resultat+".png");
+	}
+}
+    	document.getElementById('status').innerHTML='Ouverture de la caisse de ravitaillement en cours';
+    	lancerDes(1);
+    	
+    	</script>
+
+  	
+	
+
+    	</body>
+    	</html>
+
+    
+
+
+
+
+
