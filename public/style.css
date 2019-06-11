@@ -368,27 +368,6 @@ div.scrollmenu a:hover {
   bottom: 0;
 }
 
-.arme {
-  height: 30px;
-  width: 30px;
-  background-color: grey;
-}
-
-.armure {
-  height: 30px;
-  width: 30px;
-  background-color: grey;
-}
-
-.bottes {
-  height: 30px;
-  width: 30px;
-  background-color: grey;
-}
-
-
-
-
 .ActionsDiv {
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
@@ -443,7 +422,7 @@ div.scrollmenu a:hover {
   margin-bottom: 0px !important;
 }
 
-.contenuVie { /*ABC*/
+#contenuVie { /*ABC*/
   width:30px;
   height:14px;
   background-color:green; 
@@ -475,11 +454,40 @@ div.scrollmenu a:hover {
   animation-name: fadein;
   animation-duration: 2s;
 }
+
 #isTour {
-  margin:8%;
-  margin-top:10%;
   font-size:20px;
   font-family: base;
   text-shadow: black 0.1em 0.1em 0.2em;
   color:white;
-} 
+}
+
+#milieu {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#de {
+  height: 150px;
+  width: 150px;
+  background: none;
+}
+
+.armes, .armure, .bonus {
+  background: none;
+  padding: 0%;
+  border: none;
+}
+
+#armes, #armure, #bonus {
+  height: 50px;
+  width: 50px;
+}
+
+#tir {
+  font-size:20px;
+  font-family: base;
+  text-shadow: black 0.1em 0.1em 0.2em;
+  color:white;
+  display: none;
+}

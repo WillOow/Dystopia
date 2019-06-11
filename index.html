@@ -7,7 +7,7 @@
   <system.webServer>
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
   </system.webServer>
-  <title>Jeu</title>
+  <title>Dystopia</title>
 
   <script src="/jquery.js"></script>
   <script src="/socket.io/socket.io.js"> </script>
@@ -17,10 +17,9 @@
 <body id="body">
 
   <!-- PAGE DACCUEIL-->
+  <audio src="Projet.mp3" loop autoplay></audio>
   <div id="intro" style="text-align:center;">
-    <h1
-      style="color:#ff9966; animation-name: fadein; animation-duration: 5s; animation-iteration-count: 1;margin-top:50%">
-      Le Jeu de l'Année</h1>
+    <h1 style="color:#ff9966; animation-name: fadein; animation-duration: 5s; animation-iteration-count: 1;margin-top:50%">Dystopia</h1>
     <div id="boutonintro">
       <button class="boutonintro">Jouer</button>
     </div>
@@ -65,7 +64,7 @@
   <div id="lobby">
     <h3 style="text-align:center;position:absolute;margin: auto; color: white;text-shadow: black 0.1em 0.1em 0.2em;top:25%;left:0;right: 0; font-size: 30px">Les autres joueurs ont</h3>
     <div style="font-family : base;text-align:center;position:absolute;margin: auto; color: white;text-shadow: black 0.1em 0.1em 0.2em;top:40%;left:0; right: 0; font-size: 80px" class="counter"">60</div>
-    <h3 style="text-align:center;position:absolute;margin: auto; color: white;text-shadow: black 0.1em 0.1em 0.2em;top:60%;left:0; right: 0; font-size: 30px">secondes pour rejoindre avant le début de la partie</h3>
+    <h3 style="text-align:center;position:absolute;margin: auto; color: white;text-shadow: black 0.1em 0.1em 0.2em;top:60%;left:0; right: 0; font-size: 30px">secondes pour rejoindre avant le debut de la partie</h3>
   </div>
 
   <!-- PAGE DE JEU-->
@@ -87,15 +86,18 @@
     <div id="right">
       <h5 style="margin-top:10px;margin-bottom:10px;font-size:25px;color: white;text-shadow: black 0.1em 0.1em 0.2em;">Items</h5>
       <h6>Arme</h6>
-      <input type="button"class="arme"></input>
+      <button class="armes"><img id="armes" src="images/vide.jpg"></img></button>
       <h6>Armure</h6>
-      <input type="button"class="armure"></input>
-      <h6>Bottes</h6>
-      <input type="button"class="bottes"></input>
+      <button class="armure"><img id="armure" src="images/vide.jpg"></button>
+      <h6>Bonus</h6>
+      <button class="bonus"><img id="bonus" src="images/vide.jpg"></button>
     </div>
+    <div id="milieu">
     <span id="isTour">Ce n'est pas votre tour</span>
     <div id="Joueur" style="margin:auto; text-align:center;"></div>
     <div class="des"><img src='face1&.png' id='de'></div>
+    <span id="tir"></span>
+    </div>
 
     <div id="bottom">
 
@@ -105,7 +107,7 @@
 
       <div class="barreVie"
         style="border:3px solid #161616; background-color:grey; border-radius: 12px;-webkit-border-radius: 12px;-moz-border-radius: 12px;">
-        <div class="contenuVie" style="width:300px;height:15px;background-color:green; border-radius: 12px;-webkit-border-radius: 12px;-moz-border-radius: 12px;font-family: base;font-size: 15px">1OOpv</div>
+        <div id="contenuVie" style="width:300px;height:15px;background-color:green; border-radius: 12px;-webkit-border-radius: 12px;-moz-border-radius: 12px;font-family: base;font-size: 15px">1OOpv</div>
       </div>
 
       <div class="ActionsDiv">
@@ -115,7 +117,7 @@
         <button id="fintourbtn" class="btn-primary"><img src="images/findutour.png" width="40px" height="40px"></button>
       </div>
       <div class="AttaquerDiv">
-        <div id="degatsinfos" style="font-family: base; color:white;">DEgats</div>
+        <div id="degatsinfos" style="font-family: base; color:white;">Degats</div>
         <ul class="list-group" id="atkusers" style='margin-right:0px;padding:0px; margin:0px;'></ul>
       </div>
 
@@ -129,7 +131,7 @@
     //caractéristiques de l'écran
     var largeur = (window).innerWidth;
     console.log("Largeur écran : " + largeur);
-    $(".contenuVie").css("width", '' + largeur -10 + 'px');
+    $("#contenuVie").css("width", '' + largeur -10 + 'px');
 
     var isTour = false; //tour
 
@@ -171,6 +173,25 @@
       
     }
 
+    var itemsChance = {
+
+      "pistoletcommun" : 3,
+      "pistoletrare" : 3,
+      "pistolettresrare" : 3,
+      "pistoletepique" : 3,
+      
+      "fusilcommun" : 4,
+      "fusilrare" : 4,
+      "fusiltresrare" : 4,
+      "fusilepique" : 4,
+
+      "epeecommun" : 5,
+      "epeerare" : 5,
+      "epeetresrare" : 5,
+      "epeeepique" : 5,
+
+    }
+
     var armureProtec = {
 
       "giletcommun" : 10,
@@ -183,8 +204,12 @@
     //caractéristiques joueur
     var degats = 30;
     var portee = 1;
+    var chance = 2;
     var personneAAtk = 0;
+    var bouclier = 0;
+    var bonus = 0;
     var couleur = ""; /*ABC*/
+    var arme = "Poing (arme de base)";
 
     var id; //tour
     var socket = io.connect();
@@ -204,7 +229,7 @@
       e.preventDefault();
       couleur = $(this).data("couleur");
       var html =
-          "<li class='list-group-item'style='font-size:18px; width:120px;height:120px; color: #BBBBBB;list-style-type: none;display:inline'><button id='sendButton' class='icn" +
+          "<li class='list-group-item'style='font-size:18px; width:200px;height:200px; color: #BBBBBB;list-style-type: none;display:inline'><button id='sendButton' class='icn" +
           couleur + "'/></li>";
       $("#Joueur").html(html);
       socket.emit("new user", couleur);
@@ -245,55 +270,71 @@
       tours++;
       nombre++;
       document.getElementById("nombre").innerHTML = tours;
-      if (nombre == 5) { // un coffre tous les 5 tours
-        
-        if (tours < 20) {
-          var entier2 = Math.ceil(Math.random()*100) ;
-          var entier1 = Math.ceil(Math.random()*100) ;
-          alert("Un coffre venant du ciel a attéri sur le plateau !" + "\n" + "Veuillez le poser aux coordonnées suivantes :" + "\n" + "x:" + entier1 + "\n" + "y:" + entier2);
-        }
-        if (tours>=20) {
-          var entier2 = Math.ceil(Math.random()*100) ;
-          var entier1 = Math.ceil(Math.random()*100) ;
-          var entier3 = Math.ceil(Math.random()*100) ;
-          var entier4 = Math.ceil(Math.random()*100) ;
-          alert("DEUX coffres venant du ciel ont attéri sur le plateau !" + "\n" + "Veuillez les poser aux coordonnées suivantes :" + "\n" + "x:" + entier1 + "\n" + "y:" + entier2);
-          
-        }
-      nombre = 0;
+      if (nombre == 5) {
+        alert(data);
+        nombre = 0
       }
     });
 
-    var des = function() {
-      $(".des").show();
+    var attakkk = 0;
+    var reussite = 0;
+    var bouger = 0;
+
+    var des = function(event) {
+      $("#Joueur").fadeOut(2000);
+      setTimeout(function () {$(".des").show()}, 2000);
+      if (bouger == 0) {
+        $("#desbtn").prop("disabled",true);
+      }
       var koko = 1
       var fction = setInterval(function lancerDes(n) {
         koko++;
         var x = document.getElementById('de');
         var de1 = Math.floor(Math.random() * 6)+1;
         x.setAttribute("src","images/face"+de1+"&.png");
-        if (koko > 35) {
+        if (koko > 35*2) {
           clearInterval(fction);
           x.setAttribute("src","images/face"+de1+"&.png");
+          if (attakkk == 1) {
+            $("#tir").fadeIn(1000);
+            if (de1 >= chance) {
+              document.getElementById("tir").innerHTML = "Tir Reussi";
+              socket.emit("attaque", [event, degats]);
+              console.log("attaque vers : " + event + " dégats : " + degats);
+            }
+            else {
+              document.getElementById("tir").innerHTML = "Tir Rate";
+            }
+            attakkk = 0;
+          }
+          setTimeout(function () {$("#tir").fadeOut(2000);}, 2000);
           setTimeout(function () {$(".des").fadeOut(2000);}, 2000);
+          setTimeout(function () {$("#Joueur").fadeIn(2000);}, 4000);
         }
         console.log(koko);
       }, 100);
     }
 
     function attaquer(event) {
-      //e.preventDefault();
-      socket.emit("attaque", [event, degats]);
-      console.log("attaque vers : " + event + " dégats : " + degats);
+      $(".AttaquerDiv").removeClass('anim');
+      $("#attaquerdivbtn").prop("disabled",true);
+      attakkk = 1;
+      bouger = 1;
+      des(event);
+      bouger = 0;
     }
 
     socket.on("attaqué", function (data) {
-      vie = data;
-      $(".contenuVie").css("width", '' + vie / 100 * largeur - 10 +
+      vie = data[0];
+      bouclier = data[1];
+      if (bouclier == 0) {
+        document.getElementById('armure').setAttribute("src","images/vide.jpg");
+      }
+      $("#contenuVie").css("width", '' + vie / 100 * largeur - 10 +
         'px'); //changer la taille de la barre de vie
       document.getElementById("contenuVie").innerHTML = "" + vie + "pv";
-      $(".contenuVie").addClass("blink_me");
-      $(".contenuVie").removeClass("blink_me");
+      $("#contenuVie").addClass("blink_me");
+      $("#contenuVie").removeClass("blink_me");
       console.log("attaqué ; vie restante : " + vie);
     });
 
@@ -327,14 +368,143 @@
     var actionattaquer = function (e) {
       e.preventDefault();
       console.log("atkDiv");
-
-      document.getElementById("degatsinfos").innerHTML = "Dégats : "+degats;
-
+      document.getElementById("degatsinfos").innerHTML = "Degats : "+degats;
       if ($(".AttaquerDiv").hasClass('anim')) {
         $(".AttaquerDiv").removeClass('anim');
       } else {
         $(".AttaquerDiv").addClass('anim');
       }
+    }
+
+    var aleatoire = function () {
+      $("#Joueur").fadeOut(2000);
+      setTimeout(function () {$(".des").show()}, 4000);
+      $("#coffrebtn").prop("disabled",true);
+      var koko = 1
+      var fction = setInterval(function lancerDes() {
+        koko++;
+        var x = document.getElementById('de');
+        var armes = document.getElementById('armes');
+        var armure = document.getElementById('armure');
+        var bonus = document.getElementById('bonus');
+        var de1 = Math.floor(Math.random() * 44)+1;
+        x.setAttribute("src","images/face"+de1+".png");
+        if (koko > 35*2) {
+          clearInterval(fction);
+          x.setAttribute("src","images/face"+de1+".png");
+          setTimeout(function () {$(".des").fadeOut(2000);}, 2000);
+          setTimeout(function () {$("#Joueur").fadeIn(2000);}, 4000);
+          if (de1<31) {
+            armes.setAttribute("src","images/face"+de1+".png");
+
+            if (de1<5) {
+              degats = itemsDegats["pistoletcommun"];
+              portee = itemsPortee["pistoletcommun"];
+              chance = itemsChance["pistoletcommun"];
+              arme = "Pistolet (Commun)"
+            }
+            else if (4<de1 && de1<8) {
+              degats = itemsDegats["pistoletrare"];
+              portee = itemsPortee["pistoletrare"];
+              chance = itemsChance["pistoletrare"];
+              arme = "Pistolet (Rare)"
+            }
+            else if (7<de1 && de1<10) {
+              degats = itemsDegats["pistolettresrare"];
+              portee = itemsPortee["pistolettresrare"];
+              chance = itemsChance["pistolettresrare"];
+              arme = "Pistolet (Très Rare)"
+            }
+            else if (9<de1 && de1<11) {
+              degats = itemsDegats["pistoletepique"];
+              portee = itemsPortee["pistoletepique"];
+              chance = itemsChance["pistoletepique"];
+              arme = "Pistolet (Épique)"
+            }
+
+
+            else if (10<de1 && de1<15) {
+              degats = itemsDegats["fusilcommun"];
+              portee = itemsPortee["fusilcommun"];
+              chance = itemsChance["fusilcommun"];
+              arme = "Fusil (Commun)"
+            }
+            else if (14<de1 && de1<18) {
+              degats = itemsDegats["fusilrare"];
+              portee = itemsPortee["fusilrare"];
+              chance = itemsChance["fusilrare"];
+              arme = "Fusil (Rare)"
+            }
+            else if (17<de1 && de1<20) {
+              degats = itemsDegats["fusiltresrare"];
+              portee = itemsPortee["fusiltresrare"];
+              chance = itemsChance["fusiltresrare"];
+              arme = "Fusil (Très Rare)"
+            }
+            else if (19<de1 && de1<21) {
+              degats = itemsDegats["fusilepique"];
+              portee = itemsPortee["fusilepique"];
+              chance = itemsChance["fusilepique"];
+              arme = "Fusil (Épique)"
+            }
+
+
+            else if (20<de1 && de1<25) {
+              degats = itemsDegats["epeecommun"];
+              portee = itemsPortee["epeecommun"];
+              chance = itemsChance["epeecommun"];
+              arme = "Épée (Commun)"
+            }
+            else if (24<de1 && de1<28) {
+              degats = itemsDegats["epeerare"];
+              portee = itemsPortee["epeerare"];
+              chance = itemsChance["epeerare"];
+              arme = "Épée (Rare)"
+            }
+            else if (27<de1 && de1<30) {
+              degats = itemsDegats["epeetresrare"];
+              portee = itemsPortee["epeetresrare"];
+              chance = itemsChance["epeetresrare"];
+              arme = "Épée (Très Rare)"
+            }
+            else if (29<de1 && de1<31) {
+              degats = itemsDegats["epeeepique"];
+              portee = itemsPortee["epeeepique"];
+              chance = itemsChance["epeeepique"];
+              arme = "Épée (Épique)"
+            }
+
+
+          }
+
+          else if (30<de1 && de1<41) {
+            armure.setAttribute("src","images/face"+de1+".png");
+            
+
+            if (30<de1 && de1<35) {
+              bouclier = armureProtec["giletcommun"];
+            }
+            else if (34<de1 && de1<38) {
+              bouclier = armureProtec["giletrare"];
+            }
+            else if (37<de1 && de1<40) {
+              bouclier = armureProtec["gilettresrare"];
+            }
+            else if (39<de1 && de1<41) {
+              bouclier = armureProtec["giletepique"];
+            }
+
+            socket.emit("armure",[couleur,bouclier])
+          }
+
+          else {
+            bonus.setAttribute("src","images/face"+de1+".png");
+            bonus = 1;
+          }
+
+        }
+        console.log(koko);
+      }, 100);
     }
 
 
@@ -356,7 +526,11 @@
     $("#attaquerdivbtn").click(actionattaquer);
     $("#fintourbtn").click(tourFini);
     $("#desbtn").click(des);
-    
+    $("#coffrebtn").click(aleatoire);
+
+    $(".armes").click(function () {alert("Arme : " + arme + "\nDégats : " + degats + "\nPortée : " + portee + " case(s)\nChance au dés : " + chance + " ou plus")});
+    $(".armure").click(function () {if (bouclier > 0) {alert("Bouclier qui vous protège de " + bouclier + " pv.")} else {alert("Vous n'avez pas de bouclier.")}});
+    $(".bonus").click(function () {if (bonus == 1) {alert("Vos pas sont doublés.")} else {alert("Vous n'avez pas de bonus.")}});
 
     socket.on("enleverCouleur", function (data) {
       //$(".btn"+data).css({"background-color":"grey", "pointer-events": "none"});
