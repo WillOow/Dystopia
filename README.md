@@ -4,4 +4,4 @@ Jeu de plateau physique et numérique sur smartphone
 
 Utilise le framework socket.io avec node.js
 
-![alt text](https://raw.githubusercontent.com/WillOow/Dystopia/Plateau1_Image.png)
+![Dystopia](https://raw.githubusercontent.com/WillOow/Dystopia/plateau.png)
